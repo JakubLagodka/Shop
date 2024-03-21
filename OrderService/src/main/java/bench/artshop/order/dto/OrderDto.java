@@ -1,13 +1,13 @@
 package bench.artshop.order.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Builder
 public class OrderDto {
+    private Long orderId;
+    private String description;
 }

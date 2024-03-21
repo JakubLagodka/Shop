@@ -1,35 +1,22 @@
 package bench.artshop.order.config;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 
 
 @Configuration
-@EnableWebMvc
-public class OpenApiConfiguration implements WebMvcConfigurer {
+public class OpenApiConfiguration {
 
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("bench.artshop.order.controllers"))
-                .paths(PathSelectors.any())
-                .build();
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    public OpenAPI openAPI(){
+        return new OpenAPI()
+                .components(new Components())
+                .info(new Info()
+                        .title("Art Shop Api")
+                        .description("This is an application for operating an online store. The application was written in Java using Spring Boot and H2 as a database")
+                        .version("1.0.0"));
     }
 }
