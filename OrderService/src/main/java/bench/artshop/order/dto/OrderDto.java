@@ -9,5 +9,8 @@ import lombok.*;
 @Builder
 public class OrderDto {
     private Long orderId;
-    private String description;
+    private String productCode;
+    private Integer quantity;
+    private String customerComment;
+    private CustomerDto customer;
 }

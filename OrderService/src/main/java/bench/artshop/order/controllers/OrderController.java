@@ -20,12 +20,12 @@ public class OrderController {
     @GetMapping("/")
     public Collection<OrderDto> findOrders(){
         return List.of(OrderDto.builder()
-                        .orderId(1L)
-                        .description("kubek")
+                        .orderId(543L)
+                        .productCode("sku-kub-glin")
                 .build(),
                 OrderDto.builder()
-                        .orderId(2L)
-                        .description("miska")
+                        .orderId(544L)
+                        .productCode("maly-obr-olej")
                         .build());
     }
 }
