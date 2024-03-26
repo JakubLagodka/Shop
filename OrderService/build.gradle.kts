@@ -21,10 +21,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springdoc:springdoc-openapi:2.3.0")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+    implementation("org.mapstruct:mapstruct:1.5.5.Final")
     compileOnly("org.projectlombok:lombok:1.18.32")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
-
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
