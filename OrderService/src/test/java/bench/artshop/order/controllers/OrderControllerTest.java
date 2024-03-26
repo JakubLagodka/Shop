@@ -2,9 +2,7 @@ package bench.artshop.order.controllers;
 
 import bench.artshop.order.dao.Customer;
 import bench.artshop.order.dao.DeliveryAddress;
-import bench.artshop.order.dto.CustomerDto;
-import bench.artshop.order.dto.DeliveryAddressDto;
-import bench.artshop.order.dto.OrderDto;
+import bench.artshop.order.dao.Order;
 import bench.artshop.order.dto.PaymentType;
 import bench.artshop.order.mapper.CustomerMapper;
 import bench.artshop.order.mapper.DeliveryAddressMapper;
@@ -48,39 +46,59 @@ class OrderControllerTest {
     private DeliveryAddressMapper deliveryAddressMapper;
     @Test
     public void testGetOrders() throws Exception {
-        mockMvc.perform(get("/orders/").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].orderId").value(543L));
-    }
-    @Test
-    public void testAddOrder() throws Exception {
-        DeliveryAddress deliveryAddress = deliveryAddressRepository.save(deliveryAddressMapper.toDao(DeliveryAddressDto.builder()
+        DeliveryAddress deliveryAddress = deliveryAddressRepository.save(DeliveryAddress.builder()
                 .streetWithNumber("Kwiatowa 13")
                 .city("Lublin")
                 .postCode("20-345")
-                .build()));
-        Customer customer = customerRepository.save(customerMapper.toDao(CustomerDto.builder()
+                .build());
+        Customer customer = customerRepository.save(Customer.builder()
                 .email("jola@poczta.com")
                 .phone("+48 111 222 333")
                 .fullName("Jolanta Ciekawska")
-                .deliveryAddress(deliveryAddressMapper.toDto(deliveryAddress))
+                .deliveryAddress(deliveryAddress)
                 .paymentType(PaymentType.PREPAYMENT)
-                .build()));
-        orderRepository.save(orderMapper.toDao(OrderDto.builder()
+                .build());
+        orderRepository.save(Order.builder()
                 .orderId(1L)
                 .productCode("sku-kub-glin")
                 .quantity(6)
                 .customerComment("wszystkie w odcieniach zielonego")
-                .customer(customerMapper.toDto(customer))
-                .build()));
+                .customer(customer)
+                .build());
+
+        mockMvc.perform(get("/orders/").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].quantity").value(6));
+    }
+    @Test
+    public void testAddOrder() throws Exception {
+        DeliveryAddress deliveryAddress = deliveryAddressRepository.save(DeliveryAddress.builder()
+                .streetWithNumber("Kwiatowa 13")
+                .city("Lublin")
+                .postCode("20-345")
+                .build());
+        Customer customer = customerRepository.save(Customer.builder()
+                .email("jola@poczta.com")
+                .phone("+48 111 222 333")
+                .fullName("Jolanta Ciekawska")
+                .deliveryAddress(deliveryAddress)
+                .paymentType(PaymentType.PREPAYMENT)
+                .build());
+        orderRepository.save(Order.builder()
+                .orderId(1L)
+                .productCode("sku-kub-glin")
+                .quantity(6)
+                .customerComment("wszystkie w odcieniach zielonego")
+                .customer(customer)
+                .build());
         mockMvc.perform(post("/orders/order")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(OrderDto.builder()
+                        .content(objectMapper.writeValueAsString(Order.builder()
                                 .orderId(1L)
                                 .productCode("sku-kub-glin")
                                 .quantity(6)
                                 .customerComment("wszystkie w odcieniach zielonego")
-                                .customer(customerMapper.toDto(customer))
+                                .customer(customer)
                                 .build())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.orderId").value(1L));

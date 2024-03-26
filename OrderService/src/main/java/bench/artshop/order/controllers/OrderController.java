@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/orders")
@@ -21,14 +21,15 @@ public class OrderController {
 
     @GetMapping("/")
     public Collection<OrderDto> findOrders() {
-        return List.of(OrderDto.builder()
-                        .orderId(543L)
-                        .productCode("sku-kub-glin")
-                        .build(),
-                OrderDto.builder()
-                        .orderId(544L)
-                        .productCode("maly-obr-olej")
-                        .build());
+//        return List.of(OrderDto.builder()
+//                        .orderId(543L)
+//                        .productCode("sku-kub-glin")
+//                        .build(),
+//                OrderDto.builder()
+//                        .orderId(544L)
+//                        .productCode("maly-obr-olej")
+//                        .build());
+        return orderService.getOrders().stream().map(order -> orderMapper.toDto(order)).collect(Collectors.toList());
     }
 
     @PostMapping("/order")

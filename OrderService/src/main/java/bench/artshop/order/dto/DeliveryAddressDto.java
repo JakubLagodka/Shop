@@ -6,7 +6,6 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Builder
 public class DeliveryAddressDto {
     private String streetWithNumber;
     private String postCode;

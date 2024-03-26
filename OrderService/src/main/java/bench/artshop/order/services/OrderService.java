@@ -3,10 +3,7 @@ package bench.artshop.order.services;
 import bench.artshop.order.dao.Customer;
 import bench.artshop.order.dao.DeliveryAddress;
 import bench.artshop.order.dao.Order;
-import bench.artshop.order.dto.CustomerDto;
-import bench.artshop.order.dto.DeliveryAddressDto;
 import bench.artshop.order.dto.OrderDto;
-import bench.artshop.order.dto.PaymentType;
 import bench.artshop.order.mapper.CustomerMapper;
 import bench.artshop.order.mapper.DeliveryAddressMapper;
 import bench.artshop.order.mapper.OrderMapper;
@@ -34,9 +31,10 @@ public class OrderService {
     @Autowired
     private DeliveryAddressMapper deliveryAddressMapper;
 
-    public List<OrderDto> getOrders() {
-        return List.of(new OrderDto(1L, "sku-kub-glin", 6, "wszystkie w odcieniach zielonego", new CustomerDto("jola@poczta.com", "+48 111 222 333", "Jolanta Ciekawska", new DeliveryAddressDto("Kwiatowa 13", "20-345", "Lublin"), PaymentType.PREPAYMENT)),
-                new OrderDto(544L, "maly-obr-olej", 2, "1 obraz z portetem damy z łasiczką i 1 obraz z widokiem na las", new CustomerDto("tomek@poczta.com", "+48 66 77 888", "Tomasz Kowalski", new DeliveryAddressDto("Lipowa 58", "90-120", "Łódź"), PaymentType.CASH_ON_DELIVERY)));
+    public List<Order> getOrders() {
+//        return List.of(new OrderDto(1L, "sku-kub-glin", 6, "wszystkie w odcieniach zielonego", new CustomerDto("jola@poczta.com", "+48 111 222 333", "Jolanta Ciekawska", new DeliveryAddressDto("Kwiatowa 13", "20-345", "Lublin"), PaymentType.PREPAYMENT)),
+//                new OrderDto(544L, "maly-obr-olej", 2, "1 obraz z portetem damy z łasiczką i 1 obraz z widokiem na las", new CustomerDto("tomek@poczta.com", "+48 66 77 888", "Tomasz Kowalski", new DeliveryAddressDto("Lipowa 58", "90-120", "Łódź"), PaymentType.CASH_ON_DELIVERY)));
+        return orderRepository.findAll();
     }
 
     public Order addOrder(OrderDto orderDto) {

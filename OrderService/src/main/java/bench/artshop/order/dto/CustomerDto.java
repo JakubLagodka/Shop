@@ -6,7 +6,6 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Builder
 public class CustomerDto {
     private String email;
     private String phone;
