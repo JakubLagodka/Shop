@@ -31,7 +31,11 @@ public class OrderController {
 //                        .build());
         return orderService.getOrders().stream().map(order -> orderMapper.toDto(order)).collect(Collectors.toList());
     }
+    @GetMapping("/{orderId}")
+    public OrderDto findOrder(@PathVariable Long orderId) {
 
+        return orderMapper.toDto(orderService.getOrder(orderId));
+    }
     @PostMapping("/order")
     public ResponseEntity<OrderDto> makeOrder(@RequestBody OrderDto orderDto) {
         return ResponseEntity.ok().body(orderMapper.toDto(orderService.addOrder(orderDto)));

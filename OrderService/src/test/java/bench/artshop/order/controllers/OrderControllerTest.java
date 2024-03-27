@@ -70,6 +70,33 @@ class OrderControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].quantity").value(6));
     }
+
+    @Test
+    public void testGetOrder() throws Exception {
+        DeliveryAddress deliveryAddress = deliveryAddressRepository.save(DeliveryAddress.builder()
+                .streetWithNumber("Kwiatowa 13")
+                .city("Lublin")
+                .postCode("20-345")
+                .build());
+        Customer customer = customerRepository.save(Customer.builder()
+                .email("jola@poczta.com")
+                .phone("+48 111 222 333")
+                .fullName("Jolanta Ciekawska")
+                .deliveryAddress(deliveryAddress)
+                .paymentType(PaymentType.PREPAYMENT)
+                .build());
+        orderRepository.save(Order.builder()
+                .orderId(1L)
+                .productCode("sku-kub-glin")
+                .quantity(6)
+                .customerComment("wszystkie w odcieniach zielonego")
+                .customer(customer)
+                .build());
+
+        mockMvc.perform(get("/orders/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.quantity").value(6));
+    }
     @Test
     public void testAddOrder() throws Exception {
         DeliveryAddress deliveryAddress = deliveryAddressRepository.save(DeliveryAddress.builder()
@@ -101,6 +128,6 @@ class OrderControllerTest {
                                 .customer(customer)
                                 .build())))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.orderId").value(1L));
+                .andExpect(jsonPath("$.quantity").value(6));
     }
 }
