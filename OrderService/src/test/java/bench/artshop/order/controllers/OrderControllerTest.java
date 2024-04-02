@@ -66,7 +66,7 @@ class OrderControllerTest {
                 .customer(customer)
                 .build());
 
-        mockMvc.perform(get("/orders/").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/order/").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].quantity").value(6));
     }
@@ -93,7 +93,7 @@ class OrderControllerTest {
                 .customer(customer)
                 .build());
 
-        mockMvc.perform(get("/orders/1").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/order/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.quantity").value(6));
     }
@@ -118,7 +118,7 @@ class OrderControllerTest {
                 .customerComment("wszystkie w odcieniach zielonego")
                 .customer(customer)
                 .build());
-        mockMvc.perform(post("/orders/order")
+        mockMvc.perform(post("/order/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(Order.builder()
                                 .orderId(1L)

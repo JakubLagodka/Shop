@@ -28,7 +28,7 @@ public class OrderController {
 
         return orderMapper.toDto(orderService.getOrder(orderId));
     }
-    @PostMapping("/order")
+    @PostMapping("/")
     public ResponseEntity<OrderDto> makeOrder(@RequestBody OrderDto orderDto) {
         return ResponseEntity.ok().body(orderMapper.toDto(orderService.addOrder(orderDto)));
     }

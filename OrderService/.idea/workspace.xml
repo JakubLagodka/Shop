@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f660caaa-ed17-4915-8f24-6f8381ae130d" name="Changes" comment="removed files from gitlab" />
+    <list default="true" id="f660caaa-ed17-4915-8f24-6f8381ae130d" name="Changes" comment="added exception logging">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bench/artshop/order/controllers/AdviceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bench/artshop/order/controllers/AdviceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bench/artshop/order/controllers/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bench/artshop/order/controllers/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/bench/artshop/order/controllers/OrderControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/bench/artshop/order/controllers/OrderControllerTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -99,7 +104,7 @@
       <recent name="bench.artshop.order" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'OrderService.test'">
+  <component name="RunManager" selected="Application.bench.artshop.order.OrderServiceApplication">
     <configuration name="OrderServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.artShop.OrderServiceApplication" />
       <module name="OrderService.main" />
@@ -221,7 +226,23 @@
       <option name="project" value="LOCAL" />
       <updated>1712048913097</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="removed files from gitlab">
+      <option name="closed" value="true" />
+      <created>1712049133955</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1712049133955</updated>
+    </task>
+    <task id="LOCAL-00009" summary="removed commented code">
+      <option name="closed" value="true" />
+      <created>1712049229063</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1712049229063</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -233,6 +254,8 @@
     <MESSAGE value="removed main .idea/ folder from gitlab" />
     <MESSAGE value="removed compiler from gitlab" />
     <MESSAGE value="removed files from gitlab" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed files from gitlab" />
+    <MESSAGE value="removed commented code" />
+    <MESSAGE value="added exception logging" />
+    <option name="LAST_COMMIT_MESSAGE" value="added exception logging" />
   </component>
 </project>
