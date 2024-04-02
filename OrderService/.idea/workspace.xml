@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f660caaa-ed17-4915-8f24-6f8381ae130d" name="Changes" comment="added .idea/ folder to gitignore" />
+    <list default="true" id="f660caaa-ed17-4915-8f24-6f8381ae130d" name="Changes" comment="removed compiler from gitlab">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -189,7 +191,31 @@
       <option name="project" value="LOCAL" />
       <updated>1712048239744</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="removed .idea/ folder from gitlab">
+      <option name="closed" value="true" />
+      <created>1712048368729</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712048368729</updated>
+    </task>
+    <task id="LOCAL-00005" summary="removed main .idea/ folder from gitlab">
+      <option name="closed" value="true" />
+      <created>1712048467128</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1712048467128</updated>
+    </task>
+    <task id="LOCAL-00006" summary="removed compiler from gitlab">
+      <option name="closed" value="true" />
+      <created>1712048725793</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1712048725793</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -197,6 +223,9 @@
     <MESSAGE value="Created initial version of the Order Service application" />
     <MESSAGE value="added OrderService logic, fields to Dtos and OrderControllerTest and OrderServiceTest with working tests" />
     <MESSAGE value="added .idea/ folder to gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="added .idea/ folder to gitignore" />
+    <MESSAGE value="removed .idea/ folder from gitlab" />
+    <MESSAGE value="removed main .idea/ folder from gitlab" />
+    <MESSAGE value="removed compiler from gitlab" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed compiler from gitlab" />
   </component>
 </project>
