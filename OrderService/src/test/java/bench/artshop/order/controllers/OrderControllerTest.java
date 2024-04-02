@@ -4,9 +4,6 @@ import bench.artshop.order.dao.Customer;
 import bench.artshop.order.dao.DeliveryAddress;
 import bench.artshop.order.dao.Order;
 import bench.artshop.order.dto.PaymentType;
-import bench.artshop.order.mapper.CustomerMapper;
-import bench.artshop.order.mapper.DeliveryAddressMapper;
-import bench.artshop.order.mapper.OrderMapper;
 import bench.artshop.order.repository.CustomerRepository;
 import bench.artshop.order.repository.DeliveryAddressRepository;
 import bench.artshop.order.repository.OrderRepository;
@@ -37,13 +34,7 @@ class OrderControllerTest {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private CustomerMapper customerMapper;
-    @Autowired
     private DeliveryAddressRepository deliveryAddressRepository;
-    @Autowired
-    private DeliveryAddressMapper deliveryAddressMapper;
     @Test
     public void testGetOrders() throws Exception {
         DeliveryAddress deliveryAddress = deliveryAddressRepository.save(DeliveryAddress.builder()
