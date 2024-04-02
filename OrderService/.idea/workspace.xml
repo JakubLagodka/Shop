@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f660caaa-ed17-4915-8f24-6f8381ae130d" name="Changes" comment="added OrderService logic, fields to Dtos and OrderControllerTest and OrderServiceTest with working tests" />
+    <list default="true" id="f660caaa-ed17-4915-8f24-6f8381ae130d" name="Changes" comment="added .idea/ folder to gitignore">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -188,6 +190,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Created initial version of the Order Service application" />
     <MESSAGE value="added OrderService logic, fields to Dtos and OrderControllerTest and OrderServiceTest with working tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="added OrderService logic, fields to Dtos and OrderControllerTest and OrderServiceTest with working tests" />
+    <MESSAGE value="added .idea/ folder to gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="added .idea/ folder to gitignore" />
   </component>
 </project>
