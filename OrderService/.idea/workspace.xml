@@ -104,7 +104,7 @@
       <recent name="bench.artshop.order" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.bench.artshop.order.OrderServiceApplication">
+  <component name="RunManager" selected="Gradle.Tests in 'OrderService.test'">
     <configuration name="OrderServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.artShop.OrderServiceApplication" />
       <module name="OrderService.main" />
