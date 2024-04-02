@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/order")
 public class OrderController {
 
     @Autowired
@@ -21,14 +21,6 @@ public class OrderController {
 
     @GetMapping("/")
     public Collection<OrderDto> findOrders() {
-//        return List.of(OrderDto.builder()
-//                        .orderId(543L)
-//                        .productCode("sku-kub-glin")
-//                        .build(),
-//                OrderDto.builder()
-//                        .orderId(544L)
-//                        .productCode("maly-obr-olej")
-//                        .build());
         return orderService.getOrders().stream().map(order -> orderMapper.toDto(order)).collect(Collectors.toList());
     }
     @GetMapping("/{orderId}")
