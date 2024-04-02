@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f660caaa-ed17-4915-8f24-6f8381ae130d" name="Changes" comment="added exception logging">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="f660caaa-ed17-4915-8f24-6f8381ae130d" name="Changes" comment="changed workspace">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712049229063</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="changed workspace">
+      <option name="closed" value="true" />
+      <created>1712051784506</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1712051784506</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -248,6 +257,7 @@
     <MESSAGE value="removed files from gitlab" />
     <MESSAGE value="removed commented code" />
     <MESSAGE value="added exception logging" />
-    <option name="LAST_COMMIT_MESSAGE" value="added exception logging" />
+    <MESSAGE value="changed workspace" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed workspace" />
   </component>
 </project>
