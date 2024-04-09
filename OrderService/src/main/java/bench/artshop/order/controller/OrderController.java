@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.zalando.problem.Problem;
+import org.zalando.problem.ThrowableProblem;
 
-import java.net.URI;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -24,6 +24,15 @@ public class OrderController {
     @Autowired
     private OrderMapper orderMapper;
 
+    private static ThrowableProblem getProblem(Long orderId) {
+        return Problem.builder()
+                .withTitle("Order not found")
+                .withStatus(NOT_FOUND)
+                .withDetail("Order " + orderId + "is no longer available")
+                .with("order", orderId)
+                .build();
+    }
+
     @GetMapping("/")
     public Collection<OrderDto> findOrders() {
         return orderService.getOrders().stream().map(orderMapper::toDto).collect(Collectors.toList());
@@ -35,13 +44,7 @@ public class OrderController {
             return ResponseEntity.ok().body(orderMapper.toDto(orderService.getOrder(orderId)));
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<Object>(
-                    Problem.builder()
-                            .withType(URI.create("https://example.org/out-of-stock"))
-                            .withTitle("Out of Stock")
-                            .withStatus(NOT_FOUND)
-                            .withDetail("Item " + orderId + "is no longer available")
-                            .with("product", orderId)
-                            .build(),
+                    getProblem(orderId),
                     HttpStatus.NOT_FOUND);
         }
     }
