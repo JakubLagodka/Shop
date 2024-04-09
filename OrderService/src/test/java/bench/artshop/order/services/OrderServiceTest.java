@@ -3,9 +3,6 @@ package bench.artshop.order.services;
 import bench.artshop.order.dao.Customer;
 import bench.artshop.order.dao.DeliveryAddress;
 import bench.artshop.order.dao.Order;
-import bench.artshop.order.dto.CustomerDto;
-import bench.artshop.order.dto.DeliveryAddressDto;
-import bench.artshop.order.dto.OrderDto;
 import bench.artshop.order.dto.PaymentType;
 import bench.artshop.order.mapper.CustomerMapper;
 import bench.artshop.order.mapper.DeliveryAddressMapper;
@@ -13,6 +10,7 @@ import bench.artshop.order.mapper.OrderMapper;
 import bench.artshop.order.repository.CustomerRepository;
 import bench.artshop.order.repository.DeliveryAddressRepository;
 import bench.artshop.order.repository.OrderRepository;
+import bench.artshop.order.util.OrderUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,10 +19,10 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static bench.artshop.order.util.OrderUtils.orderDtos;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,13 +44,11 @@ class OrderServiceTest {
     private DeliveryAddressRepository deliveryAddressRepository;
     @Mock
     private CustomerRepository customerRepository;
-    static List<OrderDto> orderDtos = new ArrayList<>();
+
     @BeforeAll
     public static void prepareData() {
-        orderDtos.add(new OrderDto(543L, "sku-kub-glin", 6, "wszystkie w odcieniach zielonego", new CustomerDto(1L,"jola@poczta.com", "+48 111 222 333", "Jolanta Ciekawska", new DeliveryAddressDto(1L,"Kwiatowa 13", "20-345", "Lublin"), PaymentType.PREPAYMENT)));
-
-        orderDtos.add(new OrderDto(544L, "maly-obr-olej", 2, "1 obraz z portetem damy z łasiczką i 1 obraz z widokiem na las", new CustomerDto(1L,"tomek@poczta.com", "+48 66 77 888", "Tomasz Kowalski", new DeliveryAddressDto(1L,"Lipowa 58", "90-120", "Łódź"), PaymentType.CASH_ON_DELIVERY)));
-    }
+        OrderUtils.prepareData();
+       }
 
     @Test
     public void shouldGetOrder() {

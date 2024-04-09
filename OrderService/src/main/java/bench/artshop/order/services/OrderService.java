@@ -10,11 +10,11 @@ import bench.artshop.order.mapper.OrderMapper;
 import bench.artshop.order.repository.CustomerRepository;
 import bench.artshop.order.repository.DeliveryAddressRepository;
 import bench.artshop.order.repository.OrderRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class OrderService {
@@ -36,7 +36,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
     public Order getOrder(Long orderId) {
-       return orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+       return orderRepository.findById(orderId).orElseThrow(NoSuchElementException::new);
     }
 
     public Order addOrder(OrderDto orderDto) {
