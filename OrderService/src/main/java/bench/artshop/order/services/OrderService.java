@@ -33,8 +33,6 @@ public class OrderService {
     private DeliveryAddressMapper deliveryAddressMapper;
 
     public List<Order> getOrders() {
-//        return List.of(new OrderDto(1L, "sku-kub-glin", 6, "wszystkie w odcieniach zielonego", new CustomerDto("jola@poczta.com", "+48 111 222 333", "Jolanta Ciekawska", new DeliveryAddressDto("Kwiatowa 13", "20-345", "Lublin"), PaymentType.PREPAYMENT)),
-//                new OrderDto(544L, "maly-obr-olej", 2, "1 obraz z portetem damy z łasiczką i 1 obraz z widokiem na las", new CustomerDto("tomek@poczta.com", "+48 66 77 888", "Tomasz Kowalski", new DeliveryAddressDto("Lipowa 58", "90-120", "Łódź"), PaymentType.CASH_ON_DELIVERY)));
         return orderRepository.findAll();
     }
     public Order getOrder(Long orderId) {
