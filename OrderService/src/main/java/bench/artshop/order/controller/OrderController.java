@@ -1,4 +1,4 @@
-package bench.artshop.order.controllers;
+package bench.artshop.order.controller;
 
 import bench.artshop.order.dto.OrderDto;
 import bench.artshop.order.mapper.OrderMapper;
@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/order")
 public class OrderController {
-
     @Autowired
     private OrderService orderService;
     @Autowired

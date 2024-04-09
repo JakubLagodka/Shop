@@ -1,4 +1,4 @@
-package bench.artshop.order.controllers;
+package bench.artshop.order.controller;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.java.Log;
