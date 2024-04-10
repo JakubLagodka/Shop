@@ -24,7 +24,7 @@ dependencies {
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.0")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.1")
-    implementation("org.zalando:problem:0.27.1")
+    implementation("org.zalando:problem-spring-web-starter:0.29.1")
     compileOnly("org.projectlombok:lombok:1.18.32")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.projectlombok:lombok:1.18.32")

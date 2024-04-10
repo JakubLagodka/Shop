@@ -10,7 +10,7 @@ public class ProblemUtils {
         return Problem.builder()
                 .withTitle("Order not found!")
                 .withStatus(NOT_FOUND)
-                .withDetail("Order " + orderId + "is no longer available")
+                .withDetail("Order with id = " + orderId + " is no longer available")
                 .build();
     }
     public static ThrowableProblem getInternalServerErrorProblem() {
