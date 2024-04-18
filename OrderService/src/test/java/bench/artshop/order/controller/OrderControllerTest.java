@@ -3,27 +3,33 @@ package bench.artshop.order.controller;
 import bench.artshop.order.mapper.OrderMapper;
 import bench.artshop.order.services.OrderService;
 import bench.artshop.order.util.OrderUtils;
-import bench.artshop.order.util.ProblemUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.zalando.problem.ThrowableProblem;
 
 import java.util.List;
 
 import static bench.artshop.order.util.OrderUtils.orderDtos;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @Transactional
+@AutoConfigureMockMvc
 class OrderControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
     @Mock
     private OrderService orderService;
     @Mock
@@ -54,10 +60,9 @@ class OrderControllerTest {
     }
 
     @Test
-    public void shouldNotFindOrder() {
-        assertThrows(ThrowableProblem.class, () -> {
-            throw ProblemUtils.getOrderNotFoundProblem(1L);
-        });
+    public void shouldNotFindOrder() throws Exception {
+        mockMvc.perform(get("/order/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
