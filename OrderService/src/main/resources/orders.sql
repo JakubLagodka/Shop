@@ -1,0 +1,5 @@
+TRUNCATE TABLE ORDERS;
+INSERT INTO ORDERS
+(ORDER_ID, PRODUCT_CODE, QUANTITY, CUSTOMER_COMMENT)
+VALUES
+( 1, "sku-kub-glin", 6,"wszystkie w odcieniach zielonego")
