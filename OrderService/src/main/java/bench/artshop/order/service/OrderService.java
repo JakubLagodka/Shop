@@ -1,4 +1,4 @@
-package bench.artshop.order.services;
+package bench.artshop.order.service;
 
 import bench.artshop.order.dao.Customer;
 import bench.artshop.order.dao.DeliveryAddress;

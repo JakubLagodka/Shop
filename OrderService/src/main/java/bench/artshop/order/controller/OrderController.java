@@ -2,7 +2,7 @@ package bench.artshop.order.controller;
 
 import bench.artshop.order.dto.OrderDto;
 import bench.artshop.order.mapper.OrderMapper;
-import bench.artshop.order.services.OrderService;
+import bench.artshop.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

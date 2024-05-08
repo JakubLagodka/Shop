@@ -25,6 +25,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.1")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.1")
     implementation("org.zalando:problem-spring-web-starter:0.29.1")
+    implementation("org.springframework.security:spring-security-core:6.2.4")
     implementation("org.postgresql:postgresql:42.7.3")
     compileOnly("org.projectlombok:lombok:1.18.32")
     runtimeOnly("com.h2database:h2")

@@ -1,7 +1,7 @@
 package bench.artshop.order.controller;
 
 import bench.artshop.order.mapper.OrderMapper;
-import bench.artshop.order.services.OrderService;
+import bench.artshop.order.service.OrderService;
 import bench.artshop.order.util.OrderUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

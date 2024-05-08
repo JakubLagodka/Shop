@@ -3,6 +3,7 @@ package bench.artshop.order.util;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ThrowableProblem;
 
+import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
 import static org.zalando.problem.Status.NOT_FOUND;
 
 public class ProblemUtils {
@@ -13,10 +14,24 @@ public class ProblemUtils {
                 .withDetail("Order with id = " + orderId + " is no longer available")
                 .build();
     }
+    public static ThrowableProblem getUserWithGivenIdNotFoundProblem(Long userId) {
+        return Problem.builder()
+                .withTitle("User not found!")
+                .withStatus(NOT_FOUND)
+                .withDetail("User with id = " + userId + " is no longer available")
+                .build();
+    }
+    public static ThrowableProblem getUserNotFoundProblem() {
+        return Problem.builder()
+                .withTitle("User not found!")
+                .withStatus(NOT_FOUND)
+                .withDetail("Current user is no longer available")
+                .build();
+    }
     public static ThrowableProblem getInternalServerErrorProblem() {
         return Problem.builder()
                 .withTitle("Other InternalServerError occured!")
-                .withStatus(NOT_FOUND)
+                .withStatus(INTERNAL_SERVER_ERROR)
                 .build();
     }
 }
