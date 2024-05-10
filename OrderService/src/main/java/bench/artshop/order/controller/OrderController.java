@@ -4,8 +4,10 @@ import bench.artshop.order.dto.OrderDto;
 import bench.artshop.order.mapper.OrderMapper;
 import bench.artshop.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.zalando.problem.ThrowableProblem;
 
 import java.util.stream.Collectors;
 
@@ -25,12 +27,15 @@ public class OrderController {
 
     @GetMapping("/{orderId}")
     public ResponseEntity<Object> findOrder(@PathVariable Long orderId) {
-        return ResponseEntity.ok().body(orderMapper.toDto(orderService.getOrder(orderId)));
-
+        try {
+            return ResponseEntity.ok().body(orderMapper.toDto(orderService.getOrder(orderId)));
+        }catch (ThrowableProblem throwableProblem){
+            return new ResponseEntity<>(throwableProblem.getMessage(),HttpStatusCode.valueOf(404));
+        }
     }
 
     @PostMapping("/")
     public ResponseEntity<Object> makeOrder(@RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok().body(orderMapper.toDto(orderService.addOrder(orderDto)));
+        return ResponseEntity.ok().body(orderMapper.toDto(orderService.addOrder(orderMapper.toDao(orderDto))));
     }
 }

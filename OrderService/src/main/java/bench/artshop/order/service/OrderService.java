@@ -3,10 +3,6 @@ package bench.artshop.order.service;
 import bench.artshop.order.dao.Customer;
 import bench.artshop.order.dao.DeliveryAddress;
 import bench.artshop.order.dao.Order;
-import bench.artshop.order.dto.OrderDto;
-import bench.artshop.order.mapper.CustomerMapper;
-import bench.artshop.order.mapper.DeliveryAddressMapper;
-import bench.artshop.order.mapper.OrderMapper;
 import bench.artshop.order.repository.CustomerRepository;
 import bench.artshop.order.repository.DeliveryAddressRepository;
 import bench.artshop.order.repository.OrderRepository;
@@ -24,28 +20,27 @@ public class OrderService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private CustomerMapper customerMapper;
-
-    @Autowired
     private DeliveryAddressRepository deliveryAddressRepository;
-    @Autowired
-    private DeliveryAddressMapper deliveryAddressMapper;
 
     public List<Order> getOrders() {
         return orderRepository.findAll();
     }
+
     public Order getOrder(Long orderId) {
-       return orderRepository.findById(orderId).orElseThrow(()->getOrderNotFoundProblem(orderId));
+        return orderRepository.findById(orderId).orElseThrow(() -> getOrderNotFoundProblem(orderId));
     }
 
-    public Order addOrder(OrderDto orderDto) {
-        DeliveryAddress deliveryAddress = deliveryAddressRepository.save(deliveryAddressMapper.toDao(orderDto.getCustomer().getDeliveryAddress()));
-        Customer customer = customerMapper.toDao(orderDto.getCustomer());
-        customer.setDeliveryAddress(deliveryAddress);
-        Customer savedCustomer = customerRepository.save(customer);
-        Order order = orderMapper.toDao(orderDto);
+    public Order addOrder(Order order) {
+        DeliveryAddress deliveryAddress;
+        Customer customer, savedCustomer;
+        if (order.getCustomer() != null) {
+            deliveryAddress = deliveryAddressRepository.save(order.getCustomer().getDeliveryAddress());
+            customer = order.getCustomer();
+            customer.setDeliveryAddress(deliveryAddress);
+            savedCustomer = customerRepository.save(customer);
+        } else {
+            savedCustomer = null;
+        }
         order.setCustomer(savedCustomer);
         return orderRepository.save(order);
     }
