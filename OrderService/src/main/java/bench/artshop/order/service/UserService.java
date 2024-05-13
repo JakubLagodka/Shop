@@ -5,9 +5,6 @@ import bench.artshop.order.repository.UserRepository;
 import bench.artshop.order.util.ProblemUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +50,11 @@ public class UserService {
 
     public User getCurrentUser() {
         return userRepository.findByLogin(getCurrentUserLogin())
+                .orElseThrow(ProblemUtils::getUserNotFoundProblem);
+    }
+
+    public User getByLogin(String currentUserLogin) {
+        return userRepository.findByLogin(currentUserLogin)
                 .orElseThrow(ProblemUtils::getUserNotFoundProblem);
     }
 }
