@@ -1,5 +1,6 @@
 package bench.artshop.order.dto;
 
+import bench.artshop.order.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,4 +17,5 @@ public class UserDto {
     private String login;
     private String password;
     private String mail;
+    private String role;
 }

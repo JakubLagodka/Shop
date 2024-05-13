@@ -19,7 +19,7 @@ public class OrderController {
     @Autowired
     private OrderMapper orderMapper;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<Object> findOrders() {
         return ResponseEntity.ok().body(orderService.getOrders().stream().map(orderMapper::toDto).collect(Collectors.toList()));
 

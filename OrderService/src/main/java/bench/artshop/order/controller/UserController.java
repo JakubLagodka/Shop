@@ -19,7 +19,7 @@ public class UserController {
 
     private final UserMapper userMapper;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Object> saveUser(@RequestBody UserDto user) {
         return ResponseEntity.ok().body(userMapper.toDto(userService.create(userMapper.toDao(user))));
     }
