@@ -1,4 +1,4 @@
-package bench.artshop.order.security;
+package bench.artshop.order.config;
 
 import bench.artshop.order.config.JwtAuthenticationFilter;
 import bench.artshop.order.repository.UserRepository;

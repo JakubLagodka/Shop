@@ -6,7 +6,7 @@ import org.zalando.problem.ThrowableProblem;
 import static org.zalando.problem.Status.*;
 
 public class ProblemUtils {
-    public static ThrowableProblem getOrderNotFoundProblem(Long orderId) {
+    public static ThrowableProblem getOrderWithGivenIdNotFoundProblem(Long orderId) {
         return Problem.builder()
                 .withTitle("Order not found!")
                 .withStatus(NOT_FOUND)
@@ -25,6 +25,20 @@ public class ProblemUtils {
                 .withTitle("User not found!")
                 .withStatus(NOT_FOUND)
                 .withDetail("User with id = " + userId + " is no longer available")
+                .build();
+    }
+    public static ThrowableProblem getUserWithGivenLoginNotFoundProblem(String login) {
+        return Problem.builder()
+                .withTitle("User not found!")
+                .withStatus(NOT_FOUND)
+                .withDetail("User with login = " + login + " is no longer available")
+                .build();
+    }
+    public static ThrowableProblem getUserWithGivenLoginAlreadyExistsroblem(String login) {
+        return Problem.builder()
+                .withTitle("AlreadyExists!")
+                .withStatus(CONFLICT)
+                .withDetail("User with login = " + login + " Already Exists in database")
                 .build();
     }
     public static ThrowableProblem getUserNotFoundProblem() {

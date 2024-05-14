@@ -1,6 +1,7 @@
 package bench.artshop.order.controller;
 
 import bench.artshop.order.dto.OrderDto;
+import bench.artshop.order.dto.UserDto;
 import bench.artshop.order.mapper.OrderMapper;
 import bench.artshop.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,16 @@ public class OrderController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> makeOrder(@RequestBody OrderDto orderDto) {
         return ResponseEntity.ok().body(orderMapper.toDto(orderService.addOrder(orderMapper.toDao(orderDto))));
+    }
+    @PutMapping("/{id}")
+    @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
+    public ResponseEntity<Object> updateOrder(@RequestBody OrderDto orderDto, @PathVariable Long id) {
+        return ResponseEntity.ok().body(orderMapper.toDto(orderService.update(orderMapper.toDao(orderDto), id)));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
+    public void deleteOrder(@PathVariable Long id) {
+        orderService.delete(id);
     }
 }

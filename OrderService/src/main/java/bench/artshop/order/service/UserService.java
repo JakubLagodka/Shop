@@ -24,7 +24,10 @@ public class UserService {
 
     public User create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        if(userRepository.findByLogin(user.getLogin()).isEmpty()) {
+            userRepository.save(user);
+        } else
+            throw ProblemUtils.getUserWithGivenLoginAlreadyExistsroblem(user.getLogin());
         return user;
     }
 
@@ -32,7 +35,9 @@ public class UserService {
         User userDb = getById(id);
         userDb.setFirstName(user.getFirstName());
         userDb.setLastName(user.getLastName());
-
+        userDb.setPassword(user.getPassword());
+        userDb.setMail(user.getMail());
+        userDb.setLogin(user.getLogin());
         return userDb;
     }
 

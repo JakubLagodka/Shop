@@ -23,7 +23,11 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Object> saveUser(@RequestBody UserDto user) {
-        return ResponseEntity.ok().body(userMapper.toDto(userService.create(userMapper.toDao(user))));
+        try {
+            return ResponseEntity.ok().body(userMapper.toDto(userService.create(userMapper.toDao(user))));
+        } catch (ThrowableProblem throwableProblem) {
+            return new ResponseEntity<>(throwableProblem.getMessage(), HttpStatusCode.valueOf(409));
+        }
     }
 
     @GetMapping("/{id}")

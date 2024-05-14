@@ -2,6 +2,8 @@ package bench.artshop.order.config;
 
 import bench.artshop.order.repository.UserRepository;
 import bench.artshop.order.service.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.zalando.problem.ThrowableProblem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,6 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        try {
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractLogin(jwt);
 
@@ -56,7 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.isNotEmpty(userEmail)
                 && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userRepository.userDetailsService()
-                    .loadUserByUsername(userEmail);
+                        .loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userEmail, null, grantedAuthorities );
@@ -64,5 +68,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
+        }catch (ThrowableProblem | ExpiredJwtException | SignatureException e) {
+            response.sendError(401,"Your token expired! Try to login again to get access!");
+        }
     }
 }
