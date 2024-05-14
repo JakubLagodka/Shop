@@ -28,7 +28,6 @@ dependencies {
     implementation("org.zalando:problem-spring-web-starter:0.29.1")
     implementation("org.postgresql:postgresql:42.7.3")
     implementation("io.jsonwebtoken:jjwt:0.12.3")
-    compileOnly("jakarta.servlet:jakarta.servlet-api:6.0.0")
     compileOnly("org.projectlombok:lombok:1.18.32")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
