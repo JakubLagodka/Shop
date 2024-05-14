@@ -3,6 +3,7 @@ package bench.artshop.order.config;
 import bench.artshop.order.repository.UserRepository;
 import bench.artshop.order.service.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,6 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
     private final UserRepository userRepository;
+
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
@@ -41,35 +44,38 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
-        if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWithIgnoreCase(authHeader, "Bearer ")) {
-
-            filterChain.doFilter(request, response);
-            return;
-        }
         try {
-        jwt = authHeader.substring(7);
-        userEmail = jwtService.extractLogin(jwt);
+            if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWithIgnoreCase(authHeader, "Bearer ")) {
 
-        String authorities = jwtService.extractAuthorities(jwt);
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            jwt = authHeader.substring(7);
+            userEmail = jwtService.extractLogin(jwt);
+
+            String authorities = jwtService.extractAuthorities(jwt);
+            List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
             if (authorities != null && !authorities.isEmpty()) {
                 grantedAuthorities = Arrays.stream(authorities.split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
             }
-        if (StringUtils.isNotEmpty(userEmail)
-                && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userRepository.userDetailsService()
+            if (StringUtils.isNotEmpty(userEmail)
+                    && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userRepository.userDetailsService()
                         .loadUserByUsername(userEmail);
-            if (jwtService.isTokenValid(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userEmail, null, grantedAuthorities );
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                if (jwtService.isTokenValid(jwt, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userEmail, null, grantedAuthorities);
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
             }
-        }
-        filterChain.doFilter(request, response);
-        }catch (ThrowableProblem | ExpiredJwtException | SignatureException e) {
-            response.sendError(401,"Your token expired! Try to login again to get access!");
+            filterChain.doFilter(request, response);
+        } catch (ThrowableProblem | ExpiredJwtException | SignatureException | MalformedJwtException e) {
+            response.sendError(401, "We have problem with Your login, please try to login again to get access!");
+        } catch (HttpMessageNotReadableException e){
+            response.sendError(400, "Required request body is missing!");
         }
     }
 }

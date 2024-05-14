@@ -56,7 +56,7 @@ public class UserController {
         return ResponseEntity.ok().body(userMapper.toDto(userService.update(userMapper.toDao(user), userService.getByLogin(SecurityUtils.getCurrentUserLogin()).getId())));
     }
 
-    @GetMapping("/")
+    @GetMapping
     @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
     public ResponseEntity<Object> findUsers() {
         return ResponseEntity.ok().body(userService.getUsers().stream().map(userMapper::toDto).collect(Collectors.toList()));
