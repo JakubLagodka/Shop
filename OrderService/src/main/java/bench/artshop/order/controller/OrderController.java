@@ -1,36 +1,66 @@
 package bench.artshop.order.controller;
 
 import bench.artshop.order.dto.OrderDto;
+import bench.artshop.order.dto.UserDto;
 import bench.artshop.order.mapper.OrderMapper;
-import bench.artshop.order.services.OrderService;
+import bench.artshop.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.zalando.problem.ThrowableProblem;
 
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/api/order")
 public class OrderController {
     @Autowired
     private OrderService orderService;
     @Autowired
     private OrderMapper orderMapper;
 
-    @GetMapping("/")
+    @GetMapping
+    @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
     public ResponseEntity<Object> findOrders() {
         return ResponseEntity.ok().body(orderService.getOrders().stream().map(orderMapper::toDto).collect(Collectors.toList()));
 
     }
 
     @GetMapping("/{orderId}")
+    @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
     public ResponseEntity<Object> findOrder(@PathVariable Long orderId) {
-        return ResponseEntity.ok().body(orderMapper.toDto(orderService.getOrder(orderId)));
-
+        try {
+            return ResponseEntity.ok().body(orderMapper.toDto(orderService.getOrder(orderId)));
+        }catch (ThrowableProblem throwableProblem){
+            return new ResponseEntity<>(throwableProblem.getMessage(),HttpStatusCode.valueOf(404));
+        }
+    }
+    @GetMapping("/logged")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Object> findOrderOfCurrentUser(@PathVariable Long orderId) {
+        try {
+            return ResponseEntity.ok().body(orderMapper.toDto(orderService.getOrder(orderId)));
+        }catch (ThrowableProblem throwableProblem){
+            return new ResponseEntity<>(throwableProblem.getMessage(),HttpStatusCode.valueOf(404));
+        }
     }
 
     @PostMapping("/")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> makeOrder(@RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok().body(orderMapper.toDto(orderService.addOrder(orderDto)));
+        return ResponseEntity.ok().body(orderMapper.toDto(orderService.addOrder(orderMapper.toDao(orderDto))));
+    }
+    @PutMapping("/{id}")
+    @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
+    public ResponseEntity<Object> updateOrder(@RequestBody OrderDto orderDto, @PathVariable Long id) {
+        return ResponseEntity.ok().body(orderMapper.toDto(orderService.update(orderMapper.toDao(orderDto), id)));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
+    public void deleteOrder(@PathVariable Long id) {
+        orderService.delete(id);
     }
 }

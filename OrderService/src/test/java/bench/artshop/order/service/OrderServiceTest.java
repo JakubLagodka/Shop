@@ -1,11 +1,9 @@
-package bench.artshop.order.services;
+package bench.artshop.order.service;
 
 import bench.artshop.order.dao.Customer;
 import bench.artshop.order.dao.DeliveryAddress;
 import bench.artshop.order.dao.Order;
 import bench.artshop.order.dto.PaymentType;
-import bench.artshop.order.mapper.CustomerMapper;
-import bench.artshop.order.mapper.DeliveryAddressMapper;
 import bench.artshop.order.mapper.OrderMapper;
 import bench.artshop.order.repository.CustomerRepository;
 import bench.artshop.order.repository.DeliveryAddressRepository;
@@ -26,7 +24,6 @@ import java.util.stream.Collectors;
 import static bench.artshop.order.util.OrderUtils.orderDtos;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @ActiveProfiles("local")
@@ -36,10 +33,6 @@ class OrderServiceTest {
     private OrderService orderService;
     @Mock
     private OrderMapper orderMapper;
-    @Mock
-    private DeliveryAddressMapper deliveryAddressMapper;
-    @Mock
-    private CustomerMapper customerMapper;
     @Mock
     private OrderRepository orderRepository;
     @Mock
@@ -55,25 +48,6 @@ class OrderServiceTest {
     @Test
     public void shouldGetOrder() {
         //given
-        Customer customer = Customer.builder()
-                .email("jola@poczta.com")
-                .phone("+48 111 222 333")
-                .fullName("Jolanta Ciekawska")
-                .deliveryAddress(DeliveryAddress.builder()
-                        .streetWithNumber("Kwiatowa 13")
-                        .city("Lublin")
-                        .postCode("20-345")
-                        .build())
-                .paymentType(PaymentType.PREPAYMENT)
-                .build();
-        Mockito.when(customerMapper.toDao(any())).thenReturn(customer);
-        Mockito.when(orderMapper.toDao(any())).thenReturn(Order.builder()
-                .orderId(1L)
-                .productCode("sku-kub-glin")
-                .quantity(6)
-                .customerComment("wszystkie w odcieniach zielonego")
-                .customer(customer)
-                .build());
         List<Order> orders = orderDtos.stream().map(orderDto -> orderMapper.toDao(orderDto)).collect(Collectors.toList());
         Mockito.when(orderService.getOrders()).thenReturn(orders);
         //when
@@ -93,7 +67,6 @@ class OrderServiceTest {
     @Test
     public void shouldAddOrder() {
         //given
-        Order orderMapperDao = orderMapper.toDao(orderDtos.get(0));
         Customer customer = Customer.builder()
                 .email("jola@poczta.com")
                 .phone("+48 111 222 333")
@@ -105,18 +78,18 @@ class OrderServiceTest {
                         .build())
                 .paymentType(PaymentType.PREPAYMENT)
                 .build();
-        Mockito.when(customerMapper.toDao(any())).thenReturn(customer);
-        Mockito.when(orderMapper.toDao(any())).thenReturn(Order.builder()
+        Order order = Order.builder()
                 .orderId(1L)
                 .productCode("sku-kub-glin")
                 .quantity(6)
                 .customerComment("wszystkie w odcieniach zielonego")
                 .customer(customer)
-                .build());
+                .build();
+        Mockito.when(orderService.addOrder(order)).thenReturn(order);
         //when
-        var result = orderService.addOrder(orderDtos.get(0));
+        var result = orderService.addOrder(order);
 
         //then
-        assertEquals(orderMapperDao, result);
+        assertEquals(order, result);
     }
 }

@@ -1,8 +1,8 @@
 package bench.artshop.order.controller;
 
-import bench.artshop.order.mapper.OrderMapper;
-import bench.artshop.order.service.OrderService;
-import bench.artshop.order.util.OrderUtils;
+import bench.artshop.order.mapper.UserMapper;
+import bench.artshop.order.service.UserService;
+import bench.artshop.order.util.UserUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,64 +12,61 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static bench.artshop.order.util.OrderUtils.orderDtos;
+import static bench.artshop.order.util.UserUtils.userDtos;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 @ActiveProfiles("local")
 @Transactional
-@AutoConfigureMockMvc
-class OrderControllerTest {
+class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Mock
-    private OrderService orderService;
+    private UserMapper userMapper;
     @Mock
-    private OrderMapper orderMapper;
+    private UserService userService;
     @InjectMocks
-    private OrderController orderController;
+    private UserController userController;
 
     @BeforeAll
     public static void prepareData() {
-        OrderUtils.prepareData();
+        UserUtils.prepareData();
     }
 
     @Test
-    public void shouldFindOrders() {
-        var result = orderController.findOrders();
+    public void shouldFindUsers() {
+        var result = userController.findUsers();
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(List.of(), result.getBody());
     }
-
     @Test
-    public void shouldFindOrder() {
-        Mockito.when(orderMapper.toDto(any())).thenReturn(orderDtos.get(0));
-        var result = orderController.findOrder(1L);
+    public void shouldFindUser() {
+        Mockito.when(userMapper.toDto(any())).thenReturn(userDtos.get(0));
+        var result = userController.findUser(1L);
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertEquals(orderDtos.get(0), result.getBody());
+        assertEquals(userDtos.get(0), result.getBody());
     }
-
     @Test
-    public void shouldNotFindOrder() throws Exception {
-        mockMvc.perform(get("/order/1").contentType(MediaType.APPLICATION_JSON))
+    public void shouldNotFindUser() throws Exception {
+        mockMvc.perform(get("/user/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
-
     @Test
-    public void shouldMakeOrder() {
-        var result = orderController.makeOrder(orderDtos.get(0));
+    public void shouldMakeUser() {
+        var result = userController.saveUser(userDtos.get(0));
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
     }

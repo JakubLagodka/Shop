@@ -19,6 +19,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springdoc:springdoc-openapi:2.5.0")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
@@ -26,6 +27,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.1")
     implementation("org.zalando:problem-spring-web-starter:0.29.1")
     implementation("org.postgresql:postgresql:42.7.3")
+    implementation("io.jsonwebtoken:jjwt:0.12.3")
     compileOnly("org.projectlombok:lombok:1.18.32")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
