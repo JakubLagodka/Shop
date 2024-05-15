@@ -6,8 +6,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {RoleMapper.class})
 public interface UserMapper {
+    @Mapping(target = "roles", source = "role")
     User toDao(UserDto userDto);
+
+    @Mapping(target = "role", source = "roles")
     UserDto toDto(User user);
 }

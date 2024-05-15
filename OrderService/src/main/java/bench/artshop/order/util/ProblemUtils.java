@@ -13,13 +13,6 @@ public class ProblemUtils {
                 .withDetail("Order with id = " + orderId + " is no longer available")
                 .build();
     }
-    public static ThrowableProblem getAccessDeniedProblem() {
-        return Problem.builder()
-                .withTitle("Access denied!")
-                .withStatus(FORBIDDEN)
-                .withDetail("Access denied! Try to login to get access!")
-                .build();
-    }
     public static ThrowableProblem getUserWithGivenIdNotFoundProblem(Long userId) {
         return Problem.builder()
                 .withTitle("User not found!")
@@ -34,6 +27,13 @@ public class ProblemUtils {
                 .withDetail("User with login = " + login + " is no longer available")
                 .build();
     }
+    public static ThrowableProblem getRoleWithGivenNameNotFoundProblem(String role) {
+        return Problem.builder()
+                .withTitle("Role not found!")
+                .withStatus(NOT_FOUND)
+                .withDetail("Role with login = " + role + " is not available")
+                .build();
+    }
     public static ThrowableProblem getUserWithGivenLoginAlreadyExistsroblem(String login) {
         return Problem.builder()
                 .withTitle("AlreadyExists!")
@@ -46,12 +46,6 @@ public class ProblemUtils {
                 .withTitle("User not found!")
                 .withStatus(NOT_FOUND)
                 .withDetail("Current user is no longer available")
-                .build();
-    }
-    public static ThrowableProblem getInternalServerErrorProblem() {
-        return Problem.builder()
-                .withTitle("Other InternalServerError occured!")
-                .withStatus(INTERNAL_SERVER_ERROR)
                 .build();
     }
 }

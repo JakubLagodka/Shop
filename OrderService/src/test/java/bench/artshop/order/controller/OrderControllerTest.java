@@ -2,7 +2,7 @@ package bench.artshop.order.controller;
 
 import bench.artshop.order.mapper.OrderMapper;
 import bench.artshop.order.service.OrderService;
-import bench.artshop.order.util.OrderUtils;
+import bench.artshop.order.data.OrderUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static bench.artshop.order.util.OrderUtils.orderDtos;
+import static bench.artshop.order.data.OrderUtils.orderDtos;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

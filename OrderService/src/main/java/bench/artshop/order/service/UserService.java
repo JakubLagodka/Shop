@@ -24,10 +24,11 @@ public class UserService {
 
     public User create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if(userRepository.findByLogin(user.getLogin()).isEmpty()) {
-            userRepository.save(user);
-        } else
-            throw ProblemUtils.getUserWithGivenLoginAlreadyExistsroblem(user.getLogin());
+
+        userRepository.findByLogin(user.getLogin())
+                .ifPresentOrElse(user1 -> {
+                    throw ProblemUtils.getUserWithGivenLoginAlreadyExistsroblem(user.getLogin());
+                }, () -> userRepository.save(user));
         return user;
     }
 

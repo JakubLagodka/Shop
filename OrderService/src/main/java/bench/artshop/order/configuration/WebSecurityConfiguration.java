@@ -1,6 +1,5 @@
-package bench.artshop.order.config;
+package bench.artshop.order.configuration;
 
-import bench.artshop.order.config.JwtAuthenticationFilter;
 import bench.artshop.order.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -1,7 +1,5 @@
 package bench.artshop.order.service;
 
-import bench.artshop.order.dao.Customer;
-import bench.artshop.order.dao.DeliveryAddress;
 import bench.artshop.order.dao.Order;
 import bench.artshop.order.repository.CustomerRepository;
 import bench.artshop.order.repository.DeliveryAddressRepository;
@@ -10,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static bench.artshop.order.util.ProblemUtils.getOrderWithGivenIdNotFoundProblem;
 
@@ -31,17 +30,11 @@ public class OrderService {
     }
 
     public Order addOrder(Order order) {
-        DeliveryAddress deliveryAddress;
-        Customer customer, savedCustomer;
-        if (order.getCustomer() != null) {
-            deliveryAddress = deliveryAddressRepository.save(order.getCustomer().getDeliveryAddress());
-            customer = order.getCustomer();
-            customer.setDeliveryAddress(deliveryAddress);
-            savedCustomer = customerRepository.save(customer);
-        } else {
-            savedCustomer = null;
-        }
-        order.setCustomer(savedCustomer);
+        Optional.ofNullable(order.getCustomer())
+                .ifPresent(customer -> {
+            customer.setDeliveryAddress(deliveryAddressRepository.save(order.getCustomer().getDeliveryAddress()));
+            order.setCustomer(customerRepository.save(customer));
+        });
         return orderRepository.save(order);
     }
 
