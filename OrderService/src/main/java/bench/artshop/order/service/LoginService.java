@@ -13,8 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static bench.artshop.order.configuration.Constants.authorities;
-import static bench.artshop.order.configuration.Constants.login;
+import static bench.artshop.order.configuration.Constants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class LoginService {
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        claims.put("authorities", authorities);
+        claims.put(AUTHORITIES, authorities);
         return new TokenDto(jwtService.generateToken(claims, login));
     }
 }

@@ -31,10 +31,10 @@ public class ProblemUtils {
         return Problem.builder()
                 .withTitle("Role not found!")
                 .withStatus(NOT_FOUND)
-                .withDetail("Role with login = " + role + " is not available")
+                .withDetail("Role with name = " + role + " is not available")
                 .build();
     }
-    public static ThrowableProblem getUserWithGivenLoginAlreadyExistsroblem(String login) {
+    public static ThrowableProblem getUserWithGivenLoginAlreadyExistsProblem(String login) {
         return Problem.builder()
                 .withTitle("AlreadyExists!")
                 .withStatus(CONFLICT)
@@ -46,6 +46,21 @@ public class ProblemUtils {
                 .withTitle("User not found!")
                 .withStatus(NOT_FOUND)
                 .withDetail("Current user is no longer available")
+                .build();
+    }
+    public static ThrowableProblem getRoleWithGivenNameAlreadyExistsProblem(String name){
+        return Problem.builder()
+                .withTitle("AlreadyExists!")
+                .withStatus(CONFLICT)
+                .withDetail("Role with name = " + name + " Already Exists in database")
+                .build();
+    }
+
+    public static ThrowableProblem getRoleWithGivenIdNotFoundProblem(Long id) {
+        return Problem.builder()
+                .withTitle("Role not found!")
+                .withStatus(NOT_FOUND)
+                .withDetail("Role with id = " + id + " is not available")
                 .build();
     }
 }

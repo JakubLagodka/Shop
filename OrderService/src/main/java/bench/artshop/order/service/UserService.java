@@ -27,7 +27,7 @@ public class UserService {
 
         userRepository.findByLogin(user.getLogin())
                 .ifPresentOrElse(user1 -> {
-                    throw ProblemUtils.getUserWithGivenLoginAlreadyExistsroblem(user.getLogin());
+                    throw ProblemUtils.getUserWithGivenLoginAlreadyExistsProblem(user.getLogin());
                 }, () -> userRepository.save(user));
         return user;
     }

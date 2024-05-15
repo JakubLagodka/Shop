@@ -4,7 +4,6 @@ import bench.artshop.order.repository.UserRepository;
 import bench.artshop.order.service.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -36,6 +35,7 @@ import static bench.artshop.order.configuration.Constants.*;
 @RequiredArgsConstructor
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtService jwtService;
 
     private final UserRepository userRepository;
@@ -44,10 +44,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
             throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader(AUTHORIZATION);
 
         try {
-            if (!StringUtils.isEmpty(authHeader) && StringUtils.startsWithIgnoreCase(authHeader, "Bearer ")) {
+            if (!StringUtils.isEmpty(authHeader) && StringUtils.startsWithIgnoreCase(authHeader, BEARER)) {
                 jwt = authHeader.substring(7);
                 List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
                 if (authorities != null && !authorities.isEmpty()) {
@@ -68,7 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
 
-        } catch (ThrowableProblem | ExpiredJwtException | SignatureException | MalformedJwtException |
+        } catch (ThrowableProblem | ExpiredJwtException  | MalformedJwtException |
                  UnsupportedJwtException e) {
             response.sendError(401, "We have problem with Your login, please try to login again to get access!");
         } catch (HttpMessageNotReadableException e) {
