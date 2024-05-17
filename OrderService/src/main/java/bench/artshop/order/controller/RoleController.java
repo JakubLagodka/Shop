@@ -17,16 +17,6 @@ import static bench.artshop.order.util.SecurityUtils.getCurrentUserLogin;
 public class RoleController {
     private final RoleService RoleService;
 
-    @PostMapping
-    @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
-    public ResponseEntity<Object> saveRole(@RequestBody Role Role) {
-        try {
-            return ResponseEntity.ok().body(RoleService.create(Role));
-        } catch (ThrowableProblem throwableProblem) {
-            return new ResponseEntity<>(throwableProblem.getMessage(), HttpStatusCode.valueOf(409));
-        }
-    }
-
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
     public ResponseEntity<Object> findRole(@PathVariable Long id) {

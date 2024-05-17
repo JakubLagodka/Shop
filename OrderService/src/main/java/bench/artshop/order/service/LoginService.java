@@ -24,13 +24,13 @@ public class LoginService {
     public TokenDto login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getLogin(), loginDto.getPassword()));
-        login = loginDto.getLogin();
         Map<String, Object> claims = new HashMap<>();
-        authorities = authentication.getAuthorities()
+        String auth = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        claims.put(AUTHORITIES, authorities);
-        return new TokenDto(jwtService.generateToken(claims, login));
+        claims.put(AUTHORITIES, auth);
+        jwtService.setAuthorities(auth);
+        return new TokenDto(jwtService.generateToken(claims, loginDto.getLogin()));
     }
 }
