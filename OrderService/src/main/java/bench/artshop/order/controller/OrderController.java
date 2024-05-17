@@ -1,7 +1,6 @@
 package bench.artshop.order.controller;
 
 import bench.artshop.order.dto.OrderDto;
-import bench.artshop.order.dto.UserDto;
 import bench.artshop.order.mapper.OrderMapper;
 import bench.artshop.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +46,7 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> makeOrder(@RequestBody OrderDto orderDto) {
         return ResponseEntity.ok().body(orderMapper.toDto(orderService.addOrder(orderMapper.toDao(orderDto))));

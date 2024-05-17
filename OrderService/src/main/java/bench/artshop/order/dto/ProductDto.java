@@ -1,7 +1,9 @@
 package bench.artshop.order.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.history.RevisionMetadata;
@@ -11,15 +13,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
-public class UserDto {
+public class ProductDto {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String login;
-    private String password;
-    private String mail;
-    private String role;
+    @NotBlank
+    private String name;
+    @NotNull
+    @PositiveOrZero
+    private Double price;
+    @NotNull
+    private boolean available;
+    @PositiveOrZero
+    private double quantity;
+
     private LocalDateTime createdDate;
 
     private String createdBy;
@@ -31,4 +36,7 @@ public class UserDto {
     private RevisionMetadata.RevisionType revisionType;
 
     private Integer revisionNumber;
+
+    private String imageUrl;
+
 }

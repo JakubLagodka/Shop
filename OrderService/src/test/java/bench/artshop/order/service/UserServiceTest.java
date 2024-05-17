@@ -3,8 +3,6 @@ package bench.artshop.order.service;
 import bench.artshop.order.dao.User;
 import bench.artshop.order.mapper.UserMapper;
 import bench.artshop.order.repository.UserRepository;
-import bench.artshop.order.data.UserUtils;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static bench.artshop.order.data.UserUtils.userDtos;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,15 +29,18 @@ class UserServiceTest {
     private UserRepository userRepository;
     @Mock
     private PasswordEncoder passwordEncoder;
-    @BeforeAll
-    public static void prepareData() {
-        UserUtils.prepareData();
-       }
 
     @Test
     public void shouldGetUser() {
         //given
-        List<User> users = userDtos.stream().map(userDto -> userMapper.toDao(userDto)).toList();
+        User user = User.builder()
+                .firstName("Jan")
+                .lastName("Kowalski")
+                .login("jan")
+                .mail("jan@gmail.com")
+                .password("password")
+                .build();
+        List<User> users = List.of(user);
         Mockito.when(userService.getUsers()).thenReturn(users);
         //when
         var result = userService.getUsers();

@@ -63,4 +63,11 @@ public class ProblemUtils {
                 .withDetail("Role with id = " + id + " is not available")
                 .build();
     }
+    public static ThrowableProblem getProductWithGivenIdNotFoundProblem(Long id) {
+        return Problem.builder()
+                .withTitle("Product not found!")
+                .withStatus(NOT_FOUND)
+                .withDetail("Product with id = " + id + " is not available")
+                .build();
+    }
 }

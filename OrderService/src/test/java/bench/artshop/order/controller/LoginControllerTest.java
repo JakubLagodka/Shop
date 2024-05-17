@@ -1,6 +1,8 @@
 package bench.artshop.order.controller;
 
+import bench.artshop.order.dao.Role;
 import bench.artshop.order.dao.User;
+import bench.artshop.order.dto.LoginDto;
 import bench.artshop.order.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -8,11 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import java.util.Collections;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,48 +25,47 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("local")
 @Transactional
-class UserControllerTest {
+public class LoginControllerTest {
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
+
     @Autowired
     private UserRepository userRepository;
 
-    @Test
-    void shouldNotGetUserWhenUserIsUnauthorized() throws Exception {
-        mockMvc.perform(get("/api/user/1"))
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$").doesNotExist());
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Test
-    void shouldNotGetUserWhenUserHasNotAccess() throws Exception {
-        mockMvc.perform(get("/api/user/1"))
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$").doesNotExist());
-    }
-
-    @Test
-    @WithMockUser(roles = "ADMIN")
-    void shouldNotUpdateUserWhenUserDoesNotExist() throws Exception {
-        mockMvc.perform(put("/api/user/1"))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").doesNotExist());
-    }
-    @Test
-    @WithMockUser(username = "john")
-    void shouldNotDeleteUserWhenUserIsNotAdmin() throws Exception {
-        User save = userRepository.save(User.builder()
+    void shouldLogin() throws Exception {
+        User user = userRepository.save(User.builder()
                 .firstName("John")
                 .lastName("John")
                 .login("john")
                 .mail("john@gmail.com")
-                .password("pass")
+                .password(passwordEncoder.encode("pass"))
+                        .roles(Collections.singletonList(new Role(null, "Role_USER")))
                 .build());
-        mockMvc.perform(delete("/api/user/" + save.getId()))
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$").doesNotExist());
+
+        mockMvc.perform(post("/api/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(new LoginDto(user.getLogin(), "pass"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").exists());
+
     }
 
+    @Test
+    void shouldNotLogin() throws Exception {
+
+        mockMvc.perform(post("/api/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(new LoginDto("login", "password"))))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$").doesNotExist());
+
+    }
 }

@@ -19,7 +19,7 @@ public class AdviceController {
     }
 
     @ExceptionHandler(ThrowableProblem.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public void handleThrowableProblemException(ThrowableProblem e) {
         log.error("Access denied! Try to login to get access!", e);
     }
